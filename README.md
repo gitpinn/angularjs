@@ -1,2 +1,2 @@
 # angularjs
-Angular JS
+AngularJS
