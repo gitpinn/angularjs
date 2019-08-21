@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Todo</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<style>
+		.main {
+			border: 1px solid #ccc;
+			width: 400px;
+			margin: 20px auto;
+			box-shadow: 2px 2px 10px #aaa;
+			border-radius: 5px;
+			background-color: rgb(230, 230, 230);
+		}
+
+		.main header {
+			padding: 20px;
+		}
+
+		.main section ul {
+			list-style-type: none;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		.main section ul li {
+			background-color: white;
+		}
+
+		.main section ul li .regdate {
+			font-size: 11px;
+			color: #999;
+			display: block;
+			padding-left: 3px;
+		}
+
+		.main section ul li table {
+			width: 100%;
+			border-top: 1px solid rgb(230, 230, 230);
+		}
+
+		.main section ul li table td {
+			text-align: center;
+		}
+
+		.main section ul li table td:nth-child(1) {
+			width: 30px;
+			border-right: 1px solid rgb(230, 230, 230);
+		}
+
+		.main section ul li table td:nth-child(2) {
+			width: 340px;
+			text-align: left;
+			padding: 10px 15px;
+		}
+
+		.main section ul li table td:nth-child(2) input {
+			border: 0px;
+			outline: none;
+		}
+
+		.main section ul li table td:nth-child(3) {
+			width: 30px;
+			cursor: pointer;
+			color: #777;
+		}
+
+		.main section .addForm {
+			padding: 15px;
+			border-top: 1px solid rgb(230, 230, 230);
+		}
+
+		.completed {
+			opacity: .3;
+		}
+
+		.btns {
+			margin: 15px 0px 0px 15px;
+		}
+	</style>
+	<script>
+        // [] 외부 모듈 의존 객체 추가  import 역할....
+		var app = angular.module("todo",[]);
+		// 필수 : 컨트롤러 생성  app의 자식
+		// 콜백함수 .. 등록
+		// $scope : 컨트롤러에서 뷰로 데이터 전달 역할...객체
+		// $  예약어
+		//  ng-controller="todoController"  연결... 속성
+		// 컨트롤러를 여러 개 만들 수 있다...  
+		// 컨트롤러는 데이터 처리 객체... 
+		app.controller('todoController', function($scope){
+
+			$scope.name ="홍길동";  // 프로퍼티 name 
+
+			// 데이터 소스
+             $scope.items = [
+				 {
+				 seq:1,
+				 title:'할일입니다.',
+				 completed: false,
+				 regdate: Date.now()
+				 } , 
+				 {
+				 seq:2,
+				 title:'테스트 입니다.',
+				 completed: true,
+				 regdate: Date.now()
+				 } , 
+				 {
+				 seq:3,
+				 title:'추가 수정입니다.',
+				 completed: false,
+				 regdate: Date.now()
+				 } , 
+			 ];
+
+			 // x 버튼으로 일정 삭제... 
+			 $scope.remove = function (item){
+				 alert(item.title);
+				 var index = $scope.items.findIndex( function (temp){
+					return item.seq == temp.seq;
+				 });
+				 alert( index );
+
+				$scope.items.splice(index, 1);
+			 }
+
+			 $scope.add = function (newTitle){
+
+				alert( newTitle );
+
+				var item =  {
+				 seq:nextVal($scope),
+				 title:newTitle, 
+				 completed: false,
+				 regdate: Date.now()
+				 };
+
+				 $scope.items.push(item);
+
+				 $scope.newTitle = "";   // 추가 후 클리어.. 
+			 }
+
+			 function nextVal(){
+			   return $scope.items[$scope.items.length-1].seq+1;
+		    }
+		});
+
+		
+
+	</script>
+</head>
+
+<body>
+    <!-- ng-app js와 연동하지 않을 거면  -->
+	<div class="main" ng-app="todo" ng-controller="todoController">
+		<header>
+			<img src="images/angular_logo_s.png">
+		</header>
+		<section>
+
+			  <!-- 1-1. 일반 태그 바인딩-->
+			  <div ng-bind="name"></div>
+			  <!-- 1-2. 표현식 -->
+			  <div>{{ name }}</div>
+
+			  <!-- 2. 폼 태그 바인딩-->
+			  <!-- innerText로 바인딩되어서 출력안됨 -->
+			  <input type="text" ng-bind="name">
+			  <br>
+			   <!-- 입력을 하면 양방향으로 갔다 옴.. ㅋㅋ -->
+			  <input type="text" ng-model="name">
+			  <br>
+			  {{ name }}
+
+			  <!-- {{   | 추가 코딩  }} -->
+			  <!-- {{ items | json }} -->
+			  <pre>{{ items | json }}</pre>
+			<ul>
+				<!--
+				<li>
+					<table>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>
+								할입니다.
+								<span class='regdate'>2019-08-21 12:00:00</span>
+							</td>
+							<td>
+								<span class="del glyphicon glyphicon-remove"></span>
+							</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>
+								할입니다.
+								<span class='regdate'>2019-08-21 12:00:00</span>
+							</td>
+							<td>
+								<span class="del glyphicon glyphicon-remove"></span>
+							</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>
+								할입니다.
+								<span class='regdate'>2019-08-21 12:00:00</span>
+							</td>
+							<td>
+								<span class="del glyphicon glyphicon-remove"></span>
+							</td>
+						</tr>
+					</table>
+				</li>
+				-->
+				<!-- Ctrl + K, F   -->
+				<!-- <li ng-repeat="item in items"> -->
+				<!-- <li ng-repeat="item in items | orderBy: 'title'"> -->
+				<!-- <li ng-repeat="item in items | orderBy: '-title'"> -->
+				<!-- <li ng-repeat="item in items | filter:{ completed: true }"> where 조건 -->
+				<li ng-repeat="item in items | filter:  myfilter  "> 
+						<table>
+						<tr>
+							<td><input type="checkbox" ng-model="item.completed"></td>
+							<td>
+								<!-- {{ item.title }} -->
+								<input type="text" ng-model="item.title">
+								<!-- <span class='regdate'>{{ item.regdate | date:'short'}}</span> -->
+								<span class='regdate'>{{ item.regdate | date:'yyyy-MM--dd HH:mm:ss'}}</span>
+							</td>
+							<td>
+								<span class="del glyphicon glyphicon-remove" ng-click="remove(item)"></span>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+
+			<div class="btns btn-group" role="group" aria-label="...">
+				<button type="button" class="btn btn-default" ng-click="myfilter={ }">All</button>
+				<!-- 변수 a=10  $scope의 멤버 변수가 자동으로 된다. -->
+				<!-- {{ a }} -->
+				<!-- <button type="button" class="btn btn-default" ng-click="a=10">Active</button> -->
+				<button type="button" class="btn btn-default" ng-click="myfilter={ completed:false}">Active</button>
+				<button type="button" class="btn btn-default" ng-click="myfilter={ completed:true}">Completed</button>
+			</div>  
+
+			<form class="addForm" name="addForm" ng-submit="add(newTitle)">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="할일을 입력하세요." 
+						minlength="3" autofocus ng-model="newTitle">
+					<span class="input-group-btn">
+						<button class="btn btn-danger" type="submit">Add</button>
+					</span>
+				</div>
+				<div ng-show="addForm.$invalid" class="alert alert-danger" style="margin-top: 10px;">입력값이 유효하지 않습니다.
+				</div>  
+			</form>
+
+			<pre>{{ addForm | json }} </pre>
+
+		</section>
+
+	</div>
+
+</body>
+
+</html>
