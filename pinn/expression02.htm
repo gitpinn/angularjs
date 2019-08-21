@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<h1>test</h1>
+
+<div ng-app="myApp">
+
+    바인딩 : <span w3-test-directive></span>
+    <hr>
+    바인딩 : <span w3-test-directive></span>
+
+</div>
+
+<script>
+
+var app = angular.module("myApp", []);
+
+app.directive("w3TestDirective", function() {
+    return {
+        template : "<h1>I was</h1> made in a directive constructor!"
+    };
+});
+
+</script>
+
+</body>
+</html>
