@@ -7,4 +7,11 @@
 - ng Directive
 - ng Event
 
+## 작업 파일
+
+- todo.htm
+- images/angular_logo_s.png
+
+## 실행 화면
+
 ![ScreenShot](./images/todo.png)
