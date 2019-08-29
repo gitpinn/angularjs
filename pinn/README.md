@@ -1,6 +1,6 @@
 # AngularJS Todo 만들기
 
-- Modula(Application)
+- Module(Application)
 - Controller
 - 2-way Data Binding
 - Expression
