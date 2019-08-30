@@ -1,0 +1,23 @@
+<ul> 
+        <!-- Ctrl + K, F   -->
+        <!-- <li ng-repeat="item in items"> -->
+        <!-- <li ng-repeat="item in items | orderBy: 'title'"> -->
+        <!-- <li ng-repeat="item in items | orderBy: '-title'"> -->
+        <!-- <li ng-repeat="item in items | filter:{ completed: true }"> where 조건 -->
+        <li ng-repeat="item in items | filter:  myfilter  "> 
+                <table>
+                <tr>
+                    <td><input type="checkbox" ng-model="item.completed"></td>
+                    <td>
+                        <!-- {{ item.title }} -->
+                        <input type="text" ng-model="item.title">
+                        <!-- <span class='regdate'>{{ item.regdate | date:'short'}}</span> -->
+                        <span class='regdate'>{{ item.regdate | date:'yyyy-MM--dd HH:mm:ss'}}</span>
+                    </td>
+                    <td>
+                        <span class="del glyphicon glyphicon-remove" ng-click="remove(item)"></span>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </ul>
