@@ -1,0 +1,16 @@
+<ul>
+    <li ng-repeat="item in items | orderBy: '-title' | filter: myfilter">
+        <table>
+            <tr>
+                <td><input type="checkbox" ng-model="item.completed"></td>
+                <td>
+                    <input type="text" ng-model="item.title">
+                    <span class='regdate'>{{ item.regdate | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+                </td>
+                <td>
+                    <span class="del glyphicon glyphicon-remove" ng-click="remove(item)"></span>
+                </td>
+            </tr>
+        </table>
+    </li>
+</ul>
